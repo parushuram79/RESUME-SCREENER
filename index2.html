@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ResumeScreener Pro — Offline AI Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-layer" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+</div>
+<div class="bg-dots" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="shell">
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="hdr-in">
+      <div class="logo">
+        <div class="logo-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Resume<em>Screener</em></span>
+          <span class="logo-tag">Pro · Offline</span>
+        </div>
+      </div>
+      <div class="hdr-mid">
+        <span class="status-dot"></span>
+        <span class="status-txt">100% Local · No API · No Internet Required</span>
+      </div>
+      <div class="hdr-pills">
+        <span class="pill p-blue">🔒 Private</span>
+        <span class="pill p-cyan">⚡ Instant</span>
+        <span class="pill p-mono">offline v1.0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-in">
+      <div class="stat"><span class="stat-e">📋</span><div><div class="stat-l">Sessions</div><div class="stat-v" id="stCount">0</div></div></div>
+      <div class="stat"><span class="stat-e">🔒</span><div><div class="stat-l">Privacy</div><div class="stat-v">100%</div></div></div>
+      <div class="stat"><span class="stat-e">⚡</span><div><div class="stat-l">Speed</div><div class="stat-v">&lt;2s</div></div></div>
+      <div class="stat"><span class="stat-e">🌐</span><div><div class="stat-l">Internet</div><div class="stat-v">Not Needed</div></div></div>
+      <div class="stat"><span class="stat-e">💾</span><div><div class="stat-l">Data Stored</div><div class="stat-v">None</div></div></div>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <main class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- How it works notice -->
+      <div class="notice-card">
+        <div class="notice-icon">💡</div>
+        <div class="notice-text">
+          <strong>100% Offline Analysis</strong><br/>
+          This app reads your PDF locally in the browser. No data is sent anywhere. Analysis uses built-in keyword matching & scoring rules.
+        </div>
+      </div>
+
+      <!-- Upload -->
+      <div class="card">
+        <div class="card-lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload Resume
+        </div>
+        <div class="upload-zone" id="dz">
+          <input type="file" id="fInput" accept=".pdf,.txt,.doc"/>
+          <div class="u-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="u-title" id="dzLbl">Drag &amp; Drop PDF / TXT</div>
+          <div class="u-sub">or click to browse</div>
+        </div>
+        <div class="file-badge" id="fBadge" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span id="fName"></span>
+          <button class="rm-btn" id="rmFile">✕</button>
+        </div>
+      </div>
+
+      <!-- OR paste text -->
+      <div class="card">
+        <div class="card-lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Or Paste Resume Text
+        </div>
+        <textarea id="pasteArea" class="paste-area" placeholder="Paste your resume text here as an alternative to uploading a PDF…"></textarea>
+        <button class="btn-sm ghost" id="clearPaste" style="margin-top:8px">Clear Text</button>
+      </div>
+
+      <!-- Domain -->
+      <div class="card">
+        <div class="card-lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          Target Domain
+        </div>
+        <select class="dom-sel" id="domSel">
+          <option value="">Choose domain…</option>
+          <option value="software">💻 Software Engineering</option>
+          <option value="data">📊 Data Science &amp; ML</option>
+          <option value="product">🎯 Product Management</option>
+          <option value="design">🎨 UX / UI Design</option>
+          <option value="devops">⚙️ DevOps / Cloud</option>
+          <option value="marketing">📢 Digital Marketing</option>
+          <option value="finance">💰 Finance &amp; Accounting</option>
+          <option value="general">🌐 General</option>
+        </select>
+      </div>
+
+      <!-- Experience Level -->
+      <div class="card">
+        <div class="card-lbl">🎯 Experience Level</div>
+        <div class="exp-btns" id="expBtns">
+          <button class="exp-btn active" data-exp="junior">Junior</button>
+          <button class="exp-btn" data-exp="mid">Mid</button>
+          <button class="exp-btn" data-exp="senior">Senior</button>
+          <button class="exp-btn" data-exp="lead">Lead/Staff</button>
+        </div>
+      </div>
+
+      <!-- Analyze -->
+      <button class="btn-main" id="analyzeBtn" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Analyze Resume
+      </button>
+
+      <div class="alert alert-err" id="errBox" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+        <span id="errMsg"></span>
+      </div>
+
+      <button class="btn-sec" id="dlBtn" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Report
+      </button>
+
+      <!-- Tips -->
+      <div class="card tips-card" id="tipsCard">
+        <div class="card-lbl">💡 Pro Tips</div>
+        <div class="tip">Quantify achievements: "Increased sales by 40%"</div>
+        <div class="tip">Match keywords from the job description exactly</div>
+        <div class="tip">Keep to 1–2 pages — be concise</div>
+        <div class="tip">Use strong action verbs: Led, Built, Designed</div>
+        <div class="tip">Standard fonts, no tables — ATS-friendly</div>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <section class="content">
+
+      <!-- Empty state -->
+      <div class="empty" id="emptyState">
+        <div class="empty-orb"></div>
+        <div class="empty-doc">
+          <svg viewBox="0 0 80 100" fill="none">
+            <rect x="5" y="5" width="70" height="90" rx="8" fill="rgba(59,130,246,.08)" stroke="rgba(59,130,246,.3)" stroke-width="1.5"/>
+            <line x1="18" y1="28" x2="62" y2="28" stroke="rgba(59,130,246,.5)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="40" x2="62" y2="40" stroke="rgba(59,130,246,.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="52" x2="50" y2="52" stroke="rgba(59,130,246,.25)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="64" x2="58" y2="64" stroke="rgba(59,130,246,.2)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 class="empty-title">Ready to Analyze</h2>
+        <p class="empty-sub">Upload your resume (PDF or TXT) or paste the text. Everything runs locally — zero API calls, zero data sent anywhere.</p>
+        <div class="empty-tags">
+          <span>✓ ATS Score</span><span>✓ Keyword Analysis</span><span>✓ Skills Gap</span>
+          <span>✓ Salary Range</span><span>✓ Interview Tips</span><span>✓ Cover Letter</span>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div class="loader" id="loaderState" style="display:none">
+        <div class="loader-ring">
+          <div class="loader-center">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+        </div>
+        <div class="loader-steps">
+          <div class="ls" id="ls1">📖 Reading your resume…</div>
+          <div class="ls" id="ls2">🔍 Analyzing keywords…</div>
+          <div class="ls" id="ls3">📊 Calculating scores…</div>
+          <div class="ls" id="ls4">✨ Building your report…</div>
+        </div>
+        <div class="l-bar-wrap"><div class="l-bar" id="lBar"></div></div>
+      </div>
+
+      <!-- Results -->
+      <div class="results" id="resState" style="display:none">
+
+        <!-- Score Cards -->
+        <div class="score-grid" id="scoreGrid"></div>
+
+        <!-- Category Bars -->
+        <div class="card">
+          <div class="card-lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Category Breakdown
+          </div>
+          <div class="cat-list" id="catList"></div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="card tab-card">
+          <div class="tab-list" id="tabList">
+            <button class="tab-btn active" data-tab="overview">📋 Overview</button>
+            <button class="tab-btn" data-tab="keywords">🔑 Keywords</button>
+            <button class="tab-btn" data-tab="skills">⚡ Skills Gap</button>
+            <button class="tab-btn" data-tab="ats">🤖 ATS Check</button>
+            <button class="tab-btn" data-tab="interview">🎤 Interview</button>
+            <button class="tab-btn" data-tab="salary">💰 Salary</button>
+            <button class="tab-btn" data-tab="tools">🛠 Tools</button>
+          </div>
+          <div class="tab-body" id="tabBody"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-in">
+      <div class="footer-l">🔒 <strong>100% Offline</strong> · No data sent · No API · Works without internet</div>
+      <div class="footer-r"><span>v1.0</span><span>Built with ❤️</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- CHAT FAB -->
+<button class="fab" id="chatFab" title="Open Career Coach">
+  <div class="fab-ping"></div>
+  <svg id="fabIco" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <div class="fab-dot" id="fabDot">?</div>
+</button>
+
+<!-- CHAT PANEL -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-hdr">
+    <div class="chat-av">🤖</div>
+    <div>
+      <div class="chat-name">Resume Tips Bot</div>
+      <div class="chat-status"><span class="sdot"></span>Offline · Instant Answers</div>
+    </div>
+    <button class="chat-cls" id="chatCls">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="qchip" data-q="how">How to improve my score?</button>
+    <button class="qchip" data-q="ats">What is ATS?</button>
+    <button class="qchip" data-q="keywords">How to add keywords?</button>
+    <button class="qchip" data-q="format">Best resume format?</button>
+    <button class="qchip" data-q="salary">How to negotiate salary?</button>
+    <button class="qchip" data-q="interview">Interview tips?</button>
+  </div>
+  <div class="chat-input-row">
+    <textarea class="chat-ta" id="chatInput" placeholder="Ask anything about resumes…" rows="1"></textarea>
+    <button class="chat-send" id="chatSend">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

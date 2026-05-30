@@ -1,0 +1,183 @@
+═══════════════════════════════════════════════════════════════
+  ResumeScreener Pro — Offline Edition
+  100% Local · No API · No Internet Required to Run
+═══════════════════════════════════════════════════════════════
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HOW TO RUN — STEP BY STEP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPTION 1 — Double Click (Easiest)
+  1. Extract / unzip this folder anywhere on your computer
+  2. Open the folder → double-click "index.html"
+  3. It will open in your default browser → Done!
+
+  ⚠️  NOTE: PDF reading requires a local server (see Option 2).
+      If you only want to paste text, Option 1 works fine.
+
+──────────────────────────────────────────
+
+OPTION 2 — Local Server (Recommended for PDF Upload)
+  PDF files need a local HTTP server to be read by the browser.
+  Pick whichever method you have available:
+
+  ── Python (installed on Mac/Linux by default) ──
+  1. Open Terminal
+  2. cd into this folder:
+       cd /path/to/ResumeScreener-Pro
+  3. Run:
+       python3 -m http.server 8080
+  4. Open browser → go to:
+       http://localhost:8080
+
+  ── Node.js ──
+  1. Open Terminal in this folder
+  2. Run:
+       npx serve .
+  3. Open the URL shown (usually http://localhost:3000)
+
+  ── VS Code ──
+  1. Open this folder in VS Code
+  2. Install "Live Server" extension (Ritwick Dey)
+  3. Right-click index.html → "Open with Live Server"
+
+  ── XAMPP / WAMP / MAMP ──
+  1. Place this folder in your htdocs/www folder
+  2. Start Apache
+  3. Go to: http://localhost/ResumeScreener-Pro/
+
+──────────────────────────────────────────
+
+OPTION 3 — Text Paste (No Server Needed)
+  If you don't want to set up a server:
+  1. Open your resume PDF in any PDF viewer
+  2. Select All (Ctrl+A) → Copy (Ctrl+C)
+  3. In the app, paste into the "Or Paste Resume Text" box
+  4. Select your domain and click Analyze → works instantly!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FILES IN THIS FOLDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  index.html   → Main HTML page (open this)
+  style.css    → All styles and animations
+  engine.js    → Scoring engine, keyword database, chat bot
+  app.js       → UI logic, PDF reading, rendering
+  README.txt   → This file
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ PDF Upload + Text Paste support
+  ✅ 8 Domain profiles (Software, Data, Product, Design,
+     DevOps, Marketing, Finance, General)
+  ✅ 4 Experience levels (Junior, Mid, Senior, Lead)
+  ✅ Overall Score + ATS Score (0–100)
+  ✅ 5-category breakdown with animated bars
+  ✅ Keyword analysis (found vs missing)
+  ✅ Skills gap analysis with bridging advice
+  ✅ 12-rule ATS audit with specific fixes
+  ✅ Personalized interview preparation tips
+  ✅ Salary ranges by domain and experience level
+  ✅ Salary negotiation strategy guide
+  ✅ Cover letter generator (offline templates)
+  ✅ Quick Wins — top 5 improvements to make now
+  ✅ 30-Day Action Plan
+  ✅ LinkedIn Optimization Checklist
+  ✅ Job Description Checklist (interactive)
+  ✅ Offline Chat Bot — answers resume questions instantly
+  ✅ Downloadable full report (.txt)
+  ✅ Particle animations + blue neon theme
+  ✅ 100% responsive (mobile + desktop)
+  ✅ ZERO internet needed once page loads
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HOW THE ANALYSIS WORKS (No AI/API)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  The engine uses rule-based scoring:
+
+  KEYWORD MATCHING
+  Each domain has a curated list of 15–20 must-have keywords
+  and 20–25 nice-to-have keywords. The engine checks which
+  are present in your resume text and scores accordingly.
+
+  ATS AUDIT
+  12 rules checked:  contact info, email, experience section,
+  education section, skills section, bullet points, dates,
+  no tables, appropriate length, action verbs, quantified
+  achievements, no personal pronouns.
+
+  SCORING FORMULA
+  Overall = Experience(25%) + Skills(25%) + Education(15%)
+           + Presentation(15%) + Relevance(10%) + ATS(10%)
+
+  SALARY DATA
+  Pre-built market ranges per domain × experience level,
+  based on 2024 industry compensation surveys.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BROWSER COMPATIBILITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ Chrome 90+       (recommended)
+  ✅ Firefox 88+
+  ✅ Edge 90+
+  ✅ Safari 14+
+  ✅ Opera 76+
+  ❌ Internet Explorer (not supported)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PRIVACY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Your resume is read locally in the browser.
+  No data is sent to any server.
+  No API calls are made.
+  Nothing is stored after you close the tab.
+  Internet is only needed to load Google Fonts
+  and PDF.js (one-time on first load).
+
+  To run 100% offline after first load:
+  The browser will cache fonts and PDF.js automatically.
+  After that, it works with airplane mode on.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Problem: "Could not read text from PDF"
+  Reason:  Your PDF is scanned (image-based, not text)
+  Fix:     Copy-paste your resume text into the text box
+
+  Problem: PDF upload does nothing / file reading fails
+  Reason:  Browser blocks local file:// PDF access
+  Fix:     Use Option 2 (local server) above
+
+  Problem: Fonts look wrong
+  Reason:  No internet connection to load Google Fonts
+  Fix:     Load the page once with internet, then cache kicks in
+
+  Problem: Analysis score seems off
+  Reason:  Rule-based scoring is approximate — results vary
+           based on how your resume text is formatted
+  Fix:     Paste text manually for better extraction accuracy
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  QUICK START COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Mac / Linux:
+    cd ~/Downloads/ResumeScreener-Pro
+    python3 -m http.server 8080
+    open http://localhost:8080
+
+  Windows (PowerShell):
+    cd C:\Users\YourName\Downloads\ResumeScreener-Pro
+    python -m http.server 8080
+    start http://localhost:8080
+
+═══════════════════════════════════════════════════════════════
+  ResumeScreener Pro · Offline Edition · 100% Free to Use
+═══════════════════════════════════════════════════════════════
