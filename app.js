@@ -274,8 +274,21 @@ function renderTab(t){
     tb.innerHTML=`
       <div class="panel p-blue">
         <p class="sum-txt">${esc(a.summary)}</p>
-        <div class="sal-row"><div class="sal-lbl">💰 Estimated Salary (${S.expLevel})</div><div class="sal-val">${esc(a.salaryRange)}</div><div class="sal-desc">${esc(a.salaryDesc)}</div></div>
-      </div>
+<div class="sal-row">
+  <div class="sal-lbl">💰 ESTIMATED SALARY (${S.expLevel.toUpperCase()})</div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:6px">
+    <div>
+      <div style="font-size:10px;color:var(--tx3);letter-spacing:.08em;margin-bottom:2px">🇺🇸 UNITED STATES</div>
+      <div class="sal-val">${esc(a.salaryRange)}</div>
+      <div class="sal-desc">${esc(a.salaryDesc)}</div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--tx3);letter-spacing:.08em;margin-bottom:2px">🇮🇳 INDIA</div>
+      <div class="sal-val" style="color:#10b981">${esc(a.salaryInrRange)}</div>
+      <div class="sal-desc">${esc(a.salaryInrDesc)}</div>
+    </div>
+  </div>
+</div>      </div>
       <div class="mini-g">
         <div class="panel p-ok"><div class="ptitle" style="color:var(--cy)">✓ Strengths</div>${blist(a.strengths,'ok')}</div>
         <div class="panel p-or"><div class="ptitle" style="color:#fb923c">⚡ Improvements</div>${blist(a.improvements,'or')}</div>
@@ -361,8 +374,10 @@ function renderTab(t){
         <div class="sal-grid">
           ${Object.entries(sal).map(([lvl,d])=>`<div class="sal-box ${lvl===S.expLevel?'active':''}">
             <div class="sb-level">${lvl.charAt(0).toUpperCase()+lvl.slice(1)}</div>
-            <div class="sb-range">${d.range}</div>
-            <div class="sb-desc">${d.desc}</div>
+              <div class="sb-range">${d.range}</div>
+                <div class="sb-range" style="font-size:15px;color:#10b981;margin-top:2px">${d.inr_range}</div>
+                  <div class="sb-desc">${d.desc}</div>
+                  <div class="sb-desc" style="margin-top:2px;color:#6ee7b7">${d.inr_desc}</div>
             ${lvl===S.expLevel?'<div class="sb-badge">📍 Your Level</div>':''}
           </div>`).join('')}
         </div>
@@ -531,7 +546,8 @@ document.getElementById('dlBtn').addEventListener('click',()=>{
     sep,'  CATEGORY SCORES',sep,
     ...Object.entries(a.categoryScores).map(([k,v])=>`  ${k.padEnd(16)}: ${v}/100 ${'█'.repeat(Math.round(v/5))}${'░'.repeat(20-Math.round(v/5))}`),
     '','  Words: '+a.wordCount+' | Quantified: '+(a.hasQuantified?'Yes':'No')+' | Action Verbs: '+(a.hasActionVerbs?'Yes':'No'),
-    '',sep,'  SUMMARY',sep,`  ${a.summary}`,`  Salary: ${a.salaryRange}`,'',
+    '',sep,'  SUMMARY',sep,`  ${a.summary}`,`  Salary (US) : ${a.salaryRange}`,
+`  Salary (IN) : ${a.salaryInrRange}`,'',
     sep,'  STRENGTHS',sep,...a.strengths.map((s,i)=>`  ${i+1}. ${s}`),'',
     sep,'  IMPROVEMENTS',sep,...a.improvements.map((s,i)=>`  ${i+1}. ${s}`),'',
     sep,'  KEYWORDS FOUND',sep,`  ${a.keywordsFound.join(', ')}`,'',
